@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form';
+import {useState} from 'react'
+import FormList from './components/FormList';
 
 function App() {
+  const [listItems, setListItems] = useState([])
+  const [text, setText] = useState('')
+  const handleDelete=(e)=>{
+       e.target = "" 
+       console.log('delete')
+  }
+  const handleChange = (e)=>{
+    setText(e.target.value)
+  }
+  const handleSubmit= (e)=>{
+    e.preventDefault()
+    setListItems([...listItems, text])
+    setText('')
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Form text={text} onChange={handleChange} onSubmit={handleSubmit}/>
+    <FormList data={ listItems } onClick={handleDelete}/>
     </div>
   );
 }
